@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>TheDailyMotivation</title>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <script>
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('timer').innerHTML =
+    h + ":" + m + ":" + s;
+    var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+$(document).ready(function(){
+  $.mobile.ajaxEnabled = false;
+  $.mobile.ajaxFormsEnabled = false;
+});
+</script>
+</head>
+<body onload="startTime()">
+
+<div data-role="page" id="page_user" data-theme="b" data-content-theme="b">
+	<div data-role="panel" id="myPanel" data-position="right">
+      <div>
+        {% if not quote_exists %}
+          <form action="{% url 'daily:upload' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1>Share your Motivation</h1>
+            <textarea name="text" rows="3" placeholder="Motivational Text" style="text-align:center; font-size:1em; font-family:serif;"></textarea>
+            <br>
+            <label for="uploadImage">Upload picture</label>
+            {{ form.uploadImage }}
+            <button type="submit" data-ajax="false" rel="external">Upload</button>
+          </form>
+        {% else %}
+          <h1>Try again tomorrow!</h1>
+        {% endif %}
+          <br><hr><br>
+          <a href="url 'addTraining' user.id" data-role="button">Gallerie</a>
+      </div>
+	  </div>
+
+	  <div role="banner" class="ui-header ui-bar-f" data-role="header">
+				<h1 aria-level="1" role="heading" class="ui-title">TheDailyMotivation<br>Montag, 29.</h1>
+		 		<a data-wrapperels="span"  class="ui-btn-right ui-btn-corner-all" href="#myPanel" data-icon="grid" data-iconpos="notext"></a>
+		</div>
+	  <div data-role="main" class="ui-content" style="padding:0; margin:0;">
+      {% if quote_exists %}
+        <div>
+          <image src="{{ quote.image.url }}" style="width:100%;">
+          <p style="text-align:center; font-size:2em; font-family:serif;">{{quote.text}}</p>
+        </div>
+      {% else %}
+        <div>
+          <h1 id="timer" style="text-align:center; font-size:3em; font-family:serif;">18:43</h1>
+        </div>
+      {% endif %}
+  	</div>
+
+
+
+	  <div data-role="footer">
+		<h1></h1>
+	  </div>
+	</div>
+
+</body>
+</html>
