@@ -24,6 +24,7 @@ def index(request):
         'quote': quote,
         'quote_exists':quote_exists,
         'form': form,
+        'all_quotes': [q for q in Quote.objects.all()],
 	'date': datestring
     }
     return HttpResponse(template.render(context, request))
