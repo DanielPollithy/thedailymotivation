@@ -11,6 +11,7 @@ import datetime
 
 def index(request):
     today = datetime.date.today()
+    datestring = today.strftime('%d. %b %Y')
     quote = None
     try:
         quote = Quote.objects.get(date=today)
@@ -22,7 +23,8 @@ def index(request):
     context = {
         'quote': quote,
         'quote_exists':quote_exists,
-        'form': form
+        'form': form,
+	'date': datestring
     }
     return HttpResponse(template.render(context, request))
 
