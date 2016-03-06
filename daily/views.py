@@ -36,4 +36,5 @@ def upload(request):
         if form.is_valid():
             quote = Quote(image=request.FILES['uploadImage'], text=request.POST['text'])
             quote.save()
+            quote.postprocess()
     return HttpResponseRedirect('.')
