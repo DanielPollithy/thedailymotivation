@@ -100,7 +100,11 @@ $(document).ready(function(){
           <div class="slideshow">
             {% for quote in all_quotes%}
             <div>
-                <img style="width:100%;" data-lazy="{{quote.image.url}}"/>
+                {% if forloop.counter0 == 0 %}
+                    <img style="width:100%;" src="{{quote.image.url}}"/>
+                {% else %}
+                    <img style="width:100%;" data-lazy="{{quote.image.url}}"/>
+                {% endif %}
                 <h2 style="text-align:center;">{{quote.text}}</h2>
                 <p style="text-align:center;">{{quote.date}}</p>
             </div>
